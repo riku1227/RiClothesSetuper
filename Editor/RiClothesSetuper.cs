@@ -414,6 +414,7 @@ option.button.apply=Apply
                     Transform fromBone = clothPrefab.transform.Find(originalBone.from);
                     Transform toBone = avatarPrefab.transform.Find(originalBone.to);
                     if(fromBone != null && toBone != null) {
+                        fromBone.name = fromBone.name + "_" + expandOption.id;
                         fromBone.SetParent(toBone);
                     }
                 }
