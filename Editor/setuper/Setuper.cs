@@ -37,6 +37,8 @@ namespace RiClothes {
                 GameObject.DestroyImmediate (clothPrefab);
                 //Missing Scriptを削除する
                 MissingRemover.Remove(avatarPrefab);
+                //シリアライズオブジェクトを編集した場合一回実行しないとUnityを閉じるときにクラッシュするのを対策
+                EditorApplication.ExecuteMenuItem("Edit/Play");
             }
 
             EditorGUILayout.EndScrollView();
