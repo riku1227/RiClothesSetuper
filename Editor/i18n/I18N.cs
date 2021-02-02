@@ -6,26 +6,39 @@ using UnityEditor;
 
 namespace RiClothes {
     public class I18N {
+        private Dictionary<string, string> systemTextDictionary;
         public Dictionary<string, string> textDictionary;
 
+        static private I18N i18N;
+
         public I18N() {
+            systemTextDictionary = new Dictionary<string, string>();
             textDictionary = new Dictionary<string, string>();
 
             InitSystem();
+        }
+
+        public static I18N Instance() {
+            if(i18N == null) {
+                i18N = new I18N();
+            }
+
+            return i18N;
         }
 
         //RiClothes Setuperで使用されているテキストを読み込む
         private void InitSystem() {
             switch(Application.systemLanguage) {
                 case SystemLanguage.Japanese:
-                    LoadText(SystemTexts.JAPANESE);
+                    LoadText(SystemTexts.JAPANESE, true);
                 break;
                 default:
-                    LoadText(SystemTexts.ENGLISH);
+                    LoadText(SystemTexts.ENGLISH, true);
                 break;
             }
         }
 
+        //isAbsolute 絶対パスかどうか
         public void LoadTextFile(string path, bool isAbsolute) {
             //言語ファイルがあるフォルダのパス
             string textFolderPath = path;
@@ -46,39 +59,53 @@ namespace RiClothes {
             *  無ければ "English + .txt" のファイルを読み込む
             */
             if(File.Exists(textFolderPath + Application.systemLanguage + ".txt")) {
-                FileUtil.readText(textFolderPath + Application.systemLanguage + ".txt");
+                LoadText(FileUtil.readText(textFolderPath + Application.systemLanguage + ".txt"));
             } else {
-                FileUtil.readText(textFolderPath + "English" + ".txt");
+                LoadText(FileUtil.readText(textFolderPath + "English" + ".txt"));
             }
         }
 
+        public void ResetText() {
+            textDictionary.Clear();
+        }
+
         //'='で分割して0をkey, 1をvalueにする
-        public void LoadText(string textstring) {
+        public void LoadText(string textstring, bool isSystem = false) {
             StringReader stringReader = new StringReader(textstring);
             while(stringReader.Peek() != -1) {
                 string[] split = stringReader.ReadLine().Split('=');
                 //splitのサイズが2じゃない場合はスキップ
                 if(split.Length == 2) {
-                    this.Set(split[0], split[1]);
+                    this.Set(split[0], split[1], isSystem);
                 }
             }
         }
 
         //textDictionaryにそのkeyが無ければ追加あれば上書き
-        public void Set(string key, string value) {
-            if(!textDictionary.ContainsKey(key)) {
-                textDictionary.Add(key, value);
+        public void Set(string key, string value, bool isSystem = false) {
+            if(isSystem) {
+                if(!systemTextDictionary.ContainsKey(key)) {
+                    systemTextDictionary.Add(key, value);
+                } else {
+                    systemTextDictionary[key] = value;
+                }
             } else {
-                textDictionary[key] = value;
+                if(!textDictionary.ContainsKey(key)) {
+                    textDictionary.Add(key, value);
+                } else {
+                    textDictionary[key] = value;
+                }
             }
         }
 
         public string Get(string key) {
-            string result = key;
-            if(textDictionary.ContainsKey(key)) {
-                result = textDictionary[key];
+            if(systemTextDictionary.ContainsKey(key)) {
+                return systemTextDictionary[key];
+            } else if(textDictionary.ContainsKey(key)) {
+                return textDictionary[key];
+            } else {
+                return key;
             }
-            return result;
         }
     }
 }

@@ -1,5 +1,7 @@
 using System;
 using System.IO;
+using UnityEngine;
+using UnityEditor;
 
 namespace RiClothes {
     public class FileUtil {
@@ -16,6 +18,18 @@ namespace RiClothes {
             }
 
             return result;
+        }
+
+        public static T LoadJsonFile <T>(string jsonFilePath) {
+            if(!File.Exists(jsonFilePath)) {
+                return default(T);
+            }
+            string jsonStr = readText(jsonFilePath);
+            return JsonUtility.FromJson<T>(jsonStr);
+        }
+
+        public static string GetBasePath() {
+            return Application.dataPath + "/";
         }
     }
 }

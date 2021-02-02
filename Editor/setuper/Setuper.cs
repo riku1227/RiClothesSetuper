@@ -6,37 +6,50 @@ namespace RiClothes {
     public class Setuper: EditorWindow {
         //EditorGUILayoutのScrollView用
         Vector2 scrollPosition = Vector2.zero;
-        I18N i18N = null;
-
-        GameObject avatarPrefab = null;
-        GameObject clothPrefab = null;
+        SetuperExpandOption setuperExpandOption;
+        GameObject prevAvatarPrefab = null;
+        GameObject prevClothPrefab = null;
 
         // RiClothes SetuperのGUIを描画
         void OnGUI() {
-            if(i18N == null) {
-                i18N = new I18N();
-            }
 
             scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition);
 
-            avatarPrefab = EditorGUILayout.ObjectField( i18N.Get("option.input.avatar"), avatarPrefab, typeof(GameObject), true ) as GameObject;
-            clothPrefab = EditorGUILayout.ObjectField( i18N.Get("option.input.cloth"), clothPrefab, typeof(GameObject), true ) as GameObject;
+            PrefabData.SetAvatar( EditorGUILayout.ObjectField( I18N.Instance().Get("option.input.avatar"), PrefabData.GetAvatar(), typeof(GameObject), true ) as GameObject );
+            PrefabData.SetCloth(EditorGUILayout.ObjectField( I18N.Instance().Get("option.input.cloth"), PrefabData.GetCloth(), typeof(GameObject), true ) as GameObject);
+
+            //prevとの比較が必要な処理: 開始
+            SetupExpandOption();
+
+            //prevとの比較が必要な処理: 終了
+            //prev更新
+            prevAvatarPrefab = PrefabData.GetAvatar();
+            prevClothPrefab = PrefabData.GetCloth();
 
             //上から16のマージン
             GUILayout.Space(16);
-            if(GUILayout.Button(i18N.Get("option.button.change_cloth"))) {
-                //両方とも同じプレハブが入っているときは処理しないように
-                if(avatarPrefab == clothPrefab) {
+            if(GUILayout.Button(I18N.Instance().Get("option.button.change_cloth"))) {
+                if(PrefabData.GetAvatar() == null || PrefabData.GetCloth() == null) {
                     return;
                 }
-                UnpackPrefab();
-                SetupArmature(avatarPrefab.transform.Find("Armature"), clothPrefab.transform.Find("Armature"));
+                //両方とも同じプレハブが入っているときは処理しないように
+                if(PrefabData.GetAvatar() == PrefabData.GetCloth()) {
+                    return;
+                }
+
+                PrefabUtil.UnpackPrefabOnPrefabData();
+                //ボーンを移動する前に実行されるオプション
+                setuperExpandOption.BeforeMoveArmature();
+                SetupArmature(PrefabData.GetAvatar().transform.Find("Armature"), PrefabData.GetCloth().transform.Find("Armature"));
                 MoveClothObject();
 
+                //Setuper側の処理が終わったあとに実行
+                setuperExpandOption.AfterSetuperProcess();
+
                 //残った服の残骸(プレハブ)を消す
-                GameObject.DestroyImmediate (clothPrefab);
+                GameObject.DestroyImmediate (PrefabData.GetCloth());
                 //Missing Scriptを削除する
-                MissingRemover.Remove(avatarPrefab);
+                MissingRemover.Remove(PrefabData.GetAvatar());
                 //シリアライズオブジェクトを編集した場合一回実行しないとUnityを閉じるときにクラッシュするのを対策
                 EditorApplication.ExecuteMenuItem("Edit/Play");
             }
@@ -44,22 +57,19 @@ namespace RiClothes {
             EditorGUILayout.EndScrollView();
         }
 
-        //プレハブをアンパックする
-        private void UnpackPrefab() {
-            if(AssetDatabase.GetAssetPath(avatarPrefab) != "") {
-                avatarPrefab =  PrefabUtility.InstantiatePrefab(avatarPrefab) as GameObject;
-            }
-            if(AssetDatabase.GetAssetPath(clothPrefab) != "") {
-                avatarPrefab = PrefabUtility.InstantiatePrefab(clothPrefab) as GameObject;
+        private void SetupExpandOption() {
+            if(setuperExpandOption == null) {
+                setuperExpandOption = new SetuperExpandOption();
             }
 
-            try {
-                PrefabUtility.UnpackPrefabInstance(avatarPrefab, PrefabUnpackMode.Completely, InteractionMode.AutomatedAction);
-            } catch(ArgumentException) {}
+            if(setuperExpandOption != null) {
+                //prevの服プレハブが現在の服プレハブが違ったらSetuperExpandOptionの服プレハブを更新
+                if(prevClothPrefab != PrefabData.GetCloth()) {
+                    setuperExpandOption.UpdateClothPrefab();
+                }
 
-            try {
-                PrefabUtility.UnpackPrefabInstance(clothPrefab, PrefabUnpackMode.Completely, InteractionMode.AutomatedAction);
-            } catch(ArgumentException) {}
+                setuperExpandOption.OnExpandGUI();
+            }
         }
 
         //服のボーンをアバターの同名ボーンの下に移動させる
@@ -88,9 +98,9 @@ namespace RiClothes {
         }
         //服のオブジェクトをアバター側に移動させる
         private void MoveClothObject() {
-            int clothChileCount = clothPrefab.transform.childCount;
+            int clothChileCount = PrefabData.GetCloth().transform.childCount;
             for (int i = 0; i < clothChileCount; i++) {
-                clothPrefab.transform.GetChild (0).parent = avatarPrefab.transform;
+                PrefabData.GetCloth().transform.GetChild (0).parent = PrefabData.GetAvatar().transform;
             }
         }
     }
