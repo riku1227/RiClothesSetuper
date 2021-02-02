@@ -31,6 +31,13 @@ namespace RiClothes {
                 }
 
                 OnCustomOptionGUI();
+
+                GUILayout.Space(4);
+                showAdvancedOption = GUILayout.Toggle(showAdvancedOption, I18N.Instance().Get("option.toggle.show_advanced_option"));
+                if(showAdvancedOption) {
+                    GUILayout.Space(4);
+                    isDeleteIsEditorOnlyTag = GUILayout.Toggle(isDeleteIsEditorOnlyTag, I18N.Instance().Get("option.toggle.delete_is_set_editor_only_tag"));
+                }
             }
 
             //ExpandOptionのGUI処理
@@ -177,9 +184,12 @@ namespace RiClothes {
                             for(int i = 0; i < targetObjectList.Length; i++) {
                                 Transform target = PrefabData.GetAvatar().transform.Find(targetObjectList[i]);
                                 if(target != null) {
-                                    //GameObject.DestroyImmediate(target.gameObject);
-                                    target.gameObject.tag = "EditorOnly";
-                                    target.gameObject.SetActive(false);
+                                    if(isDeleteIsEditorOnlyTag) {
+                                        target.gameObject.tag = "EditorOnly";
+                                        target.gameObject.SetActive(false);
+                                    } else {
+                                        GameObject.DestroyImmediate(target.gameObject);
+                                    }
                                 }
                             }
                         }
@@ -190,8 +200,12 @@ namespace RiClothes {
                             for(int i = 0; i < targetObjectList.Length; i++) {
                                 Transform target = PrefabData.GetAvatar().transform.Find(targetObjectList[i]);
                                 if(target != null) {
-                                    target.tag = "EditorOnly";
-                                    target.gameObject.SetActive(false);
+                                    if(isDeleteUnnecessaryObject) {
+                                        target.tag = "EditorOnly";
+                                        target.gameObject.SetActive(false);   
+                                    } else {
+                                        GameObject.DestroyImmediate(target.gameObject);
+                                    }
                                 }
                             }
                         }
