@@ -11,6 +11,8 @@ namespace RiClothes {
             private string clothPrefabParentPath;
 
             private bool isDeleteUnnecessaryObject = true;
+            private bool showAdvancedOption = false;
+            private bool isDeleteIsEditorOnlyTag = true;
 
             public ExpandOptionProcess(ExpandOption _expandOption, string _clothPrefabParentPath) {
                 expandOption = _expandOption;
@@ -189,6 +191,7 @@ namespace RiClothes {
                                 Transform target = PrefabData.GetAvatar().transform.Find(targetObjectList[i]);
                                 if(target != null) {
                                     target.tag = "EditorOnly";
+                                    target.gameObject.SetActive(false);
                                 }
                             }
                         }
