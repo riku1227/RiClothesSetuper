@@ -131,9 +131,9 @@ namespace RiClothes {
                 //不要なオブジェクトを削除
                 if(isDeleteUnnecessaryObject) {
                     for(int i = 0; i < expandOption.unnecessary_objects.Length; i++) {
-                        GameObject unnecessaryObject = PrefabData.GetAvatar().transform.Find(expandOption.unnecessary_objects[i]).gameObject;
+                        Transform unnecessaryObject = PrefabData.GetAvatar().transform.Find(expandOption.unnecessary_objects[i]);
                         if(unnecessaryObject != null) {
-                            GameObject.DestroyImmediate(unnecessaryObject);
+                            GameObject.DestroyImmediate(unnecessaryObject.gameObject);
                         }
                     }
                 }
