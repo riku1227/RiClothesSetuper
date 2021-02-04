@@ -116,6 +116,8 @@ namespace RiClothes {
                     Transform toBone = PrefabData.GetAvatar().transform.Find(originalBone.to);
 
                     if(fromBone != null && toBone != null) {
+                        AppendIDToBone(fromBone);
+
                         fromBone.SetParent(toBone);
                     }
                 }
@@ -178,6 +180,7 @@ namespace RiClothes {
             }
 
             public void ProcessCustomOption(String optionOperation, bool isCheck, String argument, String[] targetObjectList) {
+                AppendIDToArray(targetObjectList);
                 switch (optionOperation.ToUpper()) {
                     case "DELETE_OBJECT":
                         if(isCheck) {
@@ -255,6 +258,30 @@ namespace RiClothes {
                     case "NONE":
                     break;
                 }
+            }
+
+            //valueの後ろにIDを入れて返す
+            public string AppendID(string value) {
+                return value + "_" + expandOption.id;
+            }
+
+            private void AppendIDToArray(string[] values) {
+                for(int i = 0; i < values.Length; i++) {
+                    values[i] = AppendID(values[i]);
+                }
+            }
+
+            /*
+            * ボーンの名前にIDをつける
+            */
+            private void AppendIDToBone(Transform bone) {
+                if(bone.childCount > 0) {
+                    for(int i = 0; i < bone.childCount; i++) {
+                        AppendIDToBone(bone.GetChild(i));
+                    }
+                }
+
+                bone.name = AppendID(bone.name);
             }
         }
     }

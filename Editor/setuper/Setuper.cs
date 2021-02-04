@@ -72,7 +72,9 @@ namespace RiClothes {
             }
         }
 
-        //服のボーンをアバターの同名ボーンの下に移動させる
+        /*
+        * 服のボーンをアバターの同名ボーンの下に移動させる
+        */
         private void SetupArmature(Transform avatarBone, Transform clothBone) {
             if(avatarBone == null || clothBone == null) {
                 return;
@@ -83,14 +85,19 @@ namespace RiClothes {
                     Transform clothChildBone = clothBone.GetChild(i);
                     Transform avatarChildBone = avatarBone.Find(clothChildBone.name);
 
+                    //ボーンに子ボーンがあればそれも移動させる
                     if(avatarChildBone != null) {
                         SetupArmature(avatarChildBone, clothChildBone);
                     }
                 }
             } else {
                 Transform parentClothBone = clothBone.parent;
+                //ボーンにIDを追加, ExpandOptionが無い場合は何もしない
+                clothBone.name = setuperExpandOption.AppendID(clothBone.name);
+                //ボーンの親をアバター側の同名ボーンにすることでアバターの同名ボーンに入れる
                 clothBone.SetParent(avatarBone);
 
+                //親ボーンがあればそのボーンも移動させる
                 if(parentClothBone != null) {
                     SetupArmature(avatarBone.parent, parentClothBone);
                 }
@@ -100,7 +107,9 @@ namespace RiClothes {
         private void MoveClothObject() {
             int clothChileCount = PrefabData.GetCloth().transform.childCount;
             for (int i = 0; i < clothChileCount; i++) {
-                PrefabData.GetCloth().transform.GetChild (0).parent = PrefabData.GetAvatar().transform;
+                Transform clothObject = PrefabData.GetCloth().transform.GetChild(0);
+                clothObject.name = setuperExpandOption.AppendID(clothObject.name);
+                clothObject.SetParent(PrefabData.GetAvatar().transform);
             }
         }
     }

@@ -178,5 +178,18 @@ namespace RiClothes {
                 clothPrefabParentPath = "";
             }
         }
+
+        /*
+        * valueの後ろにIDを入れて返す
+        * ExpandOptionが無い場合は何もせずに値を返す
+        */
+        public string AppendID(string value) {
+            string result = value;
+            if(V1ExpandOptionProcess != null) {
+                result = V1ExpandOptionProcess.AppendID(value);
+            }
+
+            return result;
+        }
     }
 }
