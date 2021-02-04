@@ -149,7 +149,6 @@ namespace RiClothes {
             }
 
             public void RunCustomOption(CustomOption customOption) {
-                Debug.Log("RunCustomOption");
                 switch(customOption.option_type.ToLower()) {
                     case "toggle":
                         if(customOption.multi_operation != null) {
@@ -239,7 +238,6 @@ namespace RiClothes {
                     case "SET_MATERIAL":
                         if(isCheck) {
                             string assetsPath = Path.GetDirectoryName(clothPrefabParentPath) + "/";
-                            Debug.Log(assetsPath);
                             Material material = AssetDatabase.LoadAssetAtPath<Material>(assetsPath + argument);
                             if(material != null) {
                                 for(int i = 0; i < targetObjectList.Length; i++) {
