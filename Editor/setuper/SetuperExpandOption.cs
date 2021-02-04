@@ -70,10 +70,25 @@ namespace RiClothes {
 
                 if(optionPath != null) {
                     if (optionPath.option_json_path != null && optionPath.option_json_path != "") {
-                        expandJsonPath = FileUtil.GetBasePath() + optionPath.option_json_path;
-                        expandOptionVersion = FileUtil.LoadJsonFile<ExpandOptionVersion>(FileUtil.GetBasePath() + optionPath.option_json_path);
+                        if(optionPath.option_json_path.IndexOf("~/") == 0) {
+                            //プレハブからの相対パス
+                            expandJsonPath = FileUtil.GetPathFromRelative(basePath, optionPath.option_json_path.Replace("~/", ""));
+                        } else {
+                            //Assetsからの絶対パス
+                            expandJsonPath = FileUtil.GetBasePath() + optionPath.option_json_path;
+                        }
+                        expandOptionVersion = FileUtil.LoadJsonFile<ExpandOptionVersion>(expandJsonPath);
                     } else if (optionPath.base_path != null && optionPath.base_path != "") {
-                        LoadOptionVersionJsonOnBasePath(FileUtil.GetBasePath() + optionPath.base_path);
+                        string optionBasePath = "";
+                        if(optionPath.base_path.IndexOf("~/") == 0) {
+                            //プレハブからの相対パス
+                            optionBasePath = FileUtil.GetPathFromRelative(basePath, optionPath.base_path.Replace("~/", ""));
+                        } else {
+                            //Assetsからの絶対パス
+                            optionBasePath = FileUtil.GetBasePath() + optionPath.base_path;
+                        }
+
+                        LoadOptionVersionJsonOnBasePath(optionBasePath);
                     }
                 }
 
@@ -107,10 +122,24 @@ namespace RiClothes {
 
                 if(optionPath != null) {
                     if(optionPath.language_dir_path != null && optionPath.language_dir_path != "") {
-                        I18N.Instance().LoadTextFile(FileUtil.GetBasePath() + optionPath.language_dir_path, true);
+                        string languageDirPath = "";
+                        if(optionPath.language_dir_path.IndexOf("~/") == 0) {
+                            languageDirPath = FileUtil.GetPathFromRelative(basePath, optionPath.language_dir_path.Replace("~/", ""));
+                        } else {
+                            languageDirPath = FileUtil.GetBasePath() + optionPath.language_dir_path;
+                        }
+                        I18N.Instance().LoadTextFile(languageDirPath, true);
                         isLoadLanguage = true;
                     } else if (optionPath.base_path != null && optionPath.base_path != "") {
-                        I18N.Instance().LoadTextFile(FileUtil.GetBasePath() + optionPath.base_path, false);
+                        string languageBasePath = "";
+                        if(optionPath.base_path.IndexOf("~/") == 0) {
+                            //プレハブからの相対パス
+                            languageBasePath = FileUtil.GetPathFromRelative(basePath, optionPath.base_path.Replace("~/", ""));
+                        } else {
+                            //Assetsからの絶対パス
+                            languageBasePath = FileUtil.GetBasePath() + optionPath.base_path;
+                        }
+                        I18N.Instance().LoadTextFile(languageBasePath, false);
                         isLoadLanguage = true;
                     }
                 }
