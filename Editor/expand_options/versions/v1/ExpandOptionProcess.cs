@@ -37,6 +37,7 @@ namespace RiClothes {
                 if(showAdvancedOption) {
                     GUILayout.Space(4);
                     isDeleteIsEditorOnlyTag = GUILayout.Toggle(isDeleteIsEditorOnlyTag, I18N.Instance().Get("option.toggle.delete_is_set_editor_only_tag"));
+                    GUILayout.Label(I18N.Instance().Get("option.toggle.delete_is_set_editor_only_tag.description"));
                 }
             }
 
