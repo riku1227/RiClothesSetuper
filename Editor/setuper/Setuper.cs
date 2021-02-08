@@ -10,6 +10,11 @@ namespace RiClothes {
         GameObject prevAvatarPrefab = null;
         GameObject prevClothPrefab = null;
 
+        void OnDestroy() {
+            PrefabData.ClearPrefabData();
+            I18N.Instance().ResetText();
+        }
+
         // RiClothes SetuperのGUIを描画
         void OnGUI() {
 

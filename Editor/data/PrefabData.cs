@@ -26,5 +26,10 @@ namespace RiClothes {
         public static GameObject GetCloth() {
             return clothPrefab;
         }
+
+        public static void ClearPrefabData() {
+            avatarPrefab = null;
+            clothPrefab = null;
+        }
     }
 }
