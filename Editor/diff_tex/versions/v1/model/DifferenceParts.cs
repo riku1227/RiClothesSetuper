@@ -2,6 +2,7 @@ using System;
 
 namespace RiClothes {
     namespace V1 {
+        [Serializable]
         public class DifferenceParts {
             //パーツの名前
             public String parts_name;

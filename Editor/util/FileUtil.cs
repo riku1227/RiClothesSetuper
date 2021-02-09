@@ -65,5 +65,30 @@ namespace RiClothes {
 
             return nowPath;
         }
+
+        public static Texture2D PNGToTexture2D(String path) {
+            byte[] value;
+            using (FileStream fileStream = new FileStream(path, FileMode.Open, FileAccess.Read)) {
+                using (BinaryReader binaryReader = new BinaryReader(fileStream))
+                {
+                    value = binaryReader.ReadBytes((int)binaryReader.BaseStream.Length);
+                }
+            }
+
+            int pos = 16;
+            int width = 0;
+            for (int i = 0; i < 4; i++) {
+                width = width * 256 + value[pos++];
+            }
+
+            int height = 0;
+            for (int i = 0; i < 4; i++) {
+                height = height * 256 + value[pos++];
+            }
+
+            Texture2D texture = new Texture2D(width, height);
+            texture.LoadImage(value);
+            return texture;
+        }
     }
 }

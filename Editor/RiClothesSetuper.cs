@@ -8,5 +8,10 @@ namespace RiClothes {
         static void Setup() {
             EditorWindow.GetWindow<Setuper> (true, "RiClothes Setuper");
         }
+
+        [MenuItem("RiClothes/DiffTextureGenerator")]
+        static void DiffTextureGenerator() {
+            EditorWindow.GetWindow<DiffTexGenerator> (true, "Diff Texture Generator");
+        }
     }
 }

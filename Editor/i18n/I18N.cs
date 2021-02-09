@@ -107,5 +107,54 @@ namespace RiClothes {
                 return key;
             }
         }
+
+        public void LoadLanguage(string clothPrefabParentPath) {
+            I18N.Instance().ResetText();
+
+            if(PrefabData.GetCloth() == null) {
+                return;
+            }
+
+            bool isLoadLanguage = false;
+
+            if(clothPrefabParentPath != "") {
+                //プレハブ直下もしくは"RiClothesSetuper/" にOptionPathのjsonファイルを置くパターン
+                string basePath = Path.GetDirectoryName(clothPrefabParentPath) + "/";
+
+                OptionPath optionPath = OptionPath.LoadOptionPathFromBaseDir(basePath);
+
+                if(optionPath != null) {
+                    if(optionPath.language_dir_path != null && optionPath.language_dir_path != "") {
+                        string languageDirPath = "";
+                        if(optionPath.language_dir_path.IndexOf("~/") == 0) {
+                            languageDirPath = FileUtil.GetPathFromRelative(basePath, optionPath.language_dir_path.Replace("~/", ""));
+                        } else {
+                            languageDirPath = FileUtil.GetBasePath() + optionPath.language_dir_path;
+                        }
+                        I18N.Instance().LoadTextFile(languageDirPath, true);
+                        isLoadLanguage = true;
+                    } else if (optionPath.base_path != null && optionPath.base_path != "") {
+                        string languageBasePath = "";
+                        if(optionPath.base_path.IndexOf("~/") == 0) {
+                            //プレハブからの相対パス
+                            languageBasePath = FileUtil.GetPathFromRelative(basePath, optionPath.base_path.Replace("~/", ""));
+                        } else {
+                            //Assetsからの絶対パス
+                            languageBasePath = FileUtil.GetBasePath() + optionPath.base_path;
+                        }
+                        I18N.Instance().LoadTextFile(languageBasePath, false);
+                        isLoadLanguage = true;
+                    }
+                }
+
+                //この時点でロードできていたら終了
+                if(isLoadLanguage) {
+                    return;
+                }
+
+                I18N.Instance().LoadTextFile(basePath, false);
+                return;
+            }
+        }
     }
 }
