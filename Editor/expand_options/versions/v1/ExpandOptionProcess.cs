@@ -95,7 +95,7 @@ namespace RiClothes {
                         if(GUILayout.Button(I18N.Instance().Get("option.button.apply") + ": " + I18N.Instance().Get(customOption.name), new GUILayoutOption[] {
                             GUILayout.MinWidth(200)
                         })) {
-                            //RunExpandOption(customOption);
+                            RunCustomOption(customOption);
                         }
                         EditorGUILayout.EndHorizontal();
                     }
