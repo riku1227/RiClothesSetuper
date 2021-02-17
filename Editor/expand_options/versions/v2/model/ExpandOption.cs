@@ -7,9 +7,16 @@ namespace RiClothes {
             //対応しているRiClothes Setuperのバージョン
             public int version;
             //服のID (固有のかぶらないものが望ましい)
-            public String id;
+            public string id;
             //対象のアバターのボーンをしまっているオブジェクトの名前を指定 (使うことあるのかは不明)
-            public String avatar_bone_parent = "Armature";
+            public string avatar_bone_parent = "Armature";
+            /*
+            * Setuper側で処理されないようにする
+            * 自動処理されたくないオブジェクトの名前を指定
+            * '/'でフルパスを指定することができる
+            * '**'を先頭につけるとフルパスの文字列の中にそれが含まれていたらになる
+            */
+            public string[] exclude_object_name_list;
             //Setuper側がボーンを移動させる前に実行
             public CustomOption[] before_move_bone;
             //Setuper側がボーンを移動させた後に実行

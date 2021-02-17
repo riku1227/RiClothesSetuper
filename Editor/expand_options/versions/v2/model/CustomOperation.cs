@@ -18,9 +18,9 @@ namespace RiClothes {
             * SET_MATERIAL
             *   | 指定したオブジェクトのマテリアルを設定する
             *   | argumentでmaterialのパスを指定する
-            * MOVE_BONE
+            * MOVE_OBJECT
             *   | 指定したボーンを指定した場所に入れる
-            *   | move_boneで指定する
+            *   | move_objectで指定する
             * NONE
             *   | 何もしない
             */
@@ -30,7 +30,7 @@ namespace RiClothes {
             //MOVE_BONE以外での対象オブジェクト
             public String[] target_object_list;
             //処理タイプがMOVE_BONEのとき使用
-            public OriginalBone[] move_bone;
+            public MoveObject[] move_object;
         }
     }
 }
