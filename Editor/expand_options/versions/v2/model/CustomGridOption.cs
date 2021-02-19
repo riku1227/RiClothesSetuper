@@ -7,7 +7,7 @@ namespace RiClothes {
             //オプションの名前
             public string name;
             //オプションの処理内容
-            public CustomOperation[] operation;
+            public CustomOperation[] operation_list;
         }
     }
 }

@@ -14,9 +14,10 @@ namespace RiClothes {
             * Setuper側で処理されないようにする
             * 自動処理されたくないオブジェクトの名前を指定
             * '/'でフルパスを指定することができる
-            * '**'を先頭につけるとフルパスの文字列の中にそれが含まれていたらになる
+            * '**'を先頭につけるとオブジェクトの中にそれが含まれていたらになる
+            * '***'を先頭につけるとフルパスの中にそれが含まれていたらになる
             */
-            public string[] exclude_object_name_list;
+            public string[] exclude_object_list;
             //Setuper側がボーンを移動させる前に実行
             public CustomOption[] before_move_bone;
             //Setuper側がボーンを移動させた後に実行

@@ -30,7 +30,7 @@ namespace RiClothes {
             //MOVE_BONE以外での対象オブジェクト
             public String[] target_object_list;
             //処理タイプがMOVE_BONEのとき使用
-            public MoveObject[] move_object;
+            public MoveObject[] move_object_list;
         }
     }
 }

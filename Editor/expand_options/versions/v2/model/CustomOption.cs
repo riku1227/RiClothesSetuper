@@ -39,7 +39,7 @@ namespace RiClothes {
             //特定オブジェクトが存在するときに適用ボタンを表示するようにする
             public String[] apply_filter;
             //オプションの処理内容
-            public CustomOperation[] operation;
+            public CustomOperation[] operation_list;
         }
     }
 }
