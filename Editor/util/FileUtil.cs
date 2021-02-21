@@ -53,7 +53,9 @@ namespace RiClothes {
                 if(relativeStr == "..") {
                     //Directory.GetParentは最後に"/"や"\"がついているとそのディレクトリを返すので、Path.GetDirectoryNameで"/"や"\"を除いている
                     nowPath = Directory.GetParent(Path.GetDirectoryName(nowPath)).FullName + "/";
-                } else {
+                }
+                //relativePathの最後が'/'や'\'の場合、最後の要素が空の文字列になって '/'がもう一つつけられてしまうのを防ぐために空かどうかの判定を
+                else if(relativeStr != "") {
                     //ディレクトリだったら最後に"/"をつける
                     if(Directory.Exists(nowPath + relativeStr)) {
                         nowPath = nowPath + relativeStr + "/";
