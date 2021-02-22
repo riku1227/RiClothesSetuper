@@ -46,13 +46,16 @@ namespace RiClothes {
                 //ボーンを移動する前に実行されるオプション
                 setuperExpandOption.BeforeMoveArmature();
                 SetupArmature(PrefabData.GetAvatar().transform.Find("Armature"), PrefabData.GetCloth().transform.Find("Armature"));
+                //ボーンを移動した後に実行されるオプション
+                setuperExpandOption.AfterMoveBone();
+
                 MoveClothObject();
 
                 //Setuper側の処理が終わったあとに実行
                 setuperExpandOption.AfterSetuperProcess();
 
                 //残った服の残骸(プレハブ)を消す
-                GameObject.DestroyImmediate (PrefabData.GetCloth());
+                //GameObject.DestroyImmediate (PrefabData.GetCloth());
                 //Missing Scriptを削除する
                 MissingRemover.Remove(PrefabData.GetAvatar());
                 //シリアライズオブジェクトを編集した場合一回実行しないとUnityを閉じるときにクラッシュするのを対策
@@ -79,13 +82,16 @@ namespace RiClothes {
 
         /*
         * 服のボーンをアバターの同名ボーンの下に移動させる
+        * avatarBone: アバター側のボーン
+        * clothBone: 服側のボーン
+        * dosableChild: trueのとき、ボーンの子要素を無視する (再起実行されない)
         */
-        private void SetupArmature(Transform avatarBone, Transform clothBone) {
+        private void SetupArmature(Transform avatarBone, Transform clothBone, bool disableChild = false) {
             if(avatarBone == null || clothBone == null) {
                 return;
             }
 
-            if(clothBone.childCount > 0) {
+            if(clothBone.childCount > 0 && !disableChild) {
                 for(int i = 0; i < clothBone.childCount; i++) {
                     Transform clothChildBone = clothBone.GetChild(i);
                     Transform avatarChildBone = avatarBone.Find(clothChildBone.name);
@@ -97,24 +103,37 @@ namespace RiClothes {
                 }
             } else {
                 Transform parentClothBone = clothBone.parent;
-                //ボーンにIDを追加, ExpandOptionが無い場合は何もしない
-                clothBone.name = setuperExpandOption.AppendID(clothBone.name);
-                //ボーンの親をアバター側の同名ボーンにすることでアバターの同名ボーンに入れる
-                clothBone.SetParent(avatarBone);
+                bool setDisableChild = false;
+
+                if(!setuperExpandOption.CheckExcludeObject(clothBone)) {
+                    //ボーンにIDを追加, ExpandOptionが無い場合は何もしない
+                    clothBone.name = setuperExpandOption.AppendID(clothBone.name);
+                    //ボーンの親をアバター側の同名ボーンにすることでアバターの同名ボーンに入れる
+                    clothBone.SetParent(avatarBone);
+                } else {
+                    setDisableChild = true;
+                }
 
                 //親ボーンがあればそのボーンも移動させる
                 if(parentClothBone != null) {
-                    SetupArmature(avatarBone.parent, parentClothBone);
+                    SetupArmature(avatarBone.parent, parentClothBone, setDisableChild);
                 }
             }
         }
         //服のオブジェクトをアバター側に移動させる
         private void MoveClothObject() {
             int clothChileCount = PrefabData.GetCloth().transform.childCount;
+            //除外するとindexがずれるからそれを補正する用
+            int skipCount = 0;
             for (int i = 0; i < clothChileCount; i++) {
-                Transform clothObject = PrefabData.GetCloth().transform.GetChild(0);
-                clothObject.name = setuperExpandOption.AppendID(clothObject.name);
-                clothObject.SetParent(PrefabData.GetAvatar().transform);
+                Transform clothObject = PrefabData.GetCloth().transform.GetChild(skipCount);
+                //除外オブジェクトの場合は補正用にカウントを進める
+                if(setuperExpandOption.CheckExcludeObject(clothObject)) {
+                    skipCount++;
+                } else {
+                    clothObject.name = setuperExpandOption.AppendID(clothObject.name);
+                    clothObject.SetParent(PrefabData.GetAvatar().transform);
+                }
             }
         }
     }

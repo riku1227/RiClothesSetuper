@@ -13,6 +13,7 @@ namespace RiClothes {
         //まずバージョンだけ読み込んでそのあとの処理をバージョンによって変える
         private ExpandOptionVersion expandOptionVersion;
         private V1.ExpandOptionProcess V1ExpandOptionProcess;
+        private V2.ExpandOptionProcess V2ExpandOptionProcess;
 
         public SetuperExpandOption() {
             if(PrefabData.GetCloth() != null) {
@@ -39,8 +40,21 @@ namespace RiClothes {
         * Setuperから呼び出し
         */
         public void BeforeMoveArmature() {
-            if(V1ExpandOptionProcess != null) {
+            if(V2ExpandOptionProcess != null) {
+                V2ExpandOptionProcess.BeforeMoveBone();
+            } else if(V1ExpandOptionProcess != null) {
                 V1ExpandOptionProcess.BeforeMoveArmature();
+            }
+        }
+
+        /*
+        * ボーンが移動した後に実行される
+        * Setuperからの呼び出し
+        * V2から実装
+        */
+        public void AfterMoveBone() {
+            if(V2ExpandOptionProcess != null) {
+                V2ExpandOptionProcess.AfterMoveBone();
             }
         }
 
@@ -49,7 +63,9 @@ namespace RiClothes {
         * Setuperからの呼び出し
         */
         public void AfterSetuperProcess() {
-            if(V1ExpandOptionProcess != null) {
+            if(V2ExpandOptionProcess != null) {
+                V2ExpandOptionProcess.AfterSetuperProcess();
+            } else if(V1ExpandOptionProcess != null) {
                 V1ExpandOptionProcess.AfterSetuperProcess();
             }
         }
@@ -121,6 +137,7 @@ namespace RiClothes {
         */
         private void LoadExpandOption() {
             V1ExpandOptionProcess = null;
+            V2ExpandOptionProcess = null;
 
             if(expandOptionVersion == null) {
                 return;
@@ -130,7 +147,16 @@ namespace RiClothes {
                 case 1:
                     V1.ExpandOption v1ExpandOption = FileUtil.LoadJsonFile<V1.ExpandOption>(expandJsonPath);
                     if(v1ExpandOption != null) {
+                        //V1のExpandOption内で使用されるパスのベースは服のプレハブがあるベースのフォルダになる
                         V1ExpandOptionProcess = new V1.ExpandOptionProcess(v1ExpandOption, clothPrefabParentPath);
+                    }
+                break;
+
+                case 2:
+                    V2.ExpandOption v2ExpandOption = FileUtil.LoadJsonFile<V2.ExpandOption>(expandJsonPath);
+                    if(v2ExpandOption != null) {
+                        //V2のExpandOption内で使用されるパスのベースはそのJSONファイルがあるフォルダになる
+                        V2ExpandOptionProcess = new V2.ExpandOptionProcess(v2ExpandOption, Path.GetDirectoryName(expandJsonPath) + "/");
                     }
                 break;
 
@@ -141,7 +167,9 @@ namespace RiClothes {
         }
 
         private void ExpandOptionOnGUI() {
-            if(V1ExpandOptionProcess != null) {
+            if(V2ExpandOptionProcess != null) {
+                V2ExpandOptionProcess.OnGUI();
+            } else if(V1ExpandOptionProcess != null) {
                 V1ExpandOptionProcess.OnGUI();
             }
         }
@@ -164,11 +192,25 @@ namespace RiClothes {
         */
         public string AppendID(string value) {
             string result = value;
-            if(V1ExpandOptionProcess != null) {
+            if(V2ExpandOptionProcess != null) {
+                result = V2ExpandOptionProcess.AppendID(value);
+            } else if(V1ExpandOptionProcess != null) {
                 result = V1ExpandOptionProcess.AppendID(value);
             }
 
             return result;
+        }
+
+        /*
+        * そのオブジェクトがExpandOptionで除外リストに入っているかをチェックする
+        * 入っていたらtrueを返す
+        */
+        public bool CheckExcludeObject(Transform transform) {
+            if(V2ExpandOptionProcess != null) {
+                return V2ExpandOptionProcess.CheckExcludeObject(transform);
+            } else {
+                return false;
+            }
         }
     }
 }

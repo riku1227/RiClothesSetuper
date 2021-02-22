@@ -18,6 +18,8 @@ namespace RiClothes {
             * SET_MATERIAL
             *   | 指定したオブジェクトのマテリアルを設定する
             *   | argumentでmaterialのパスを指定する
+            *   | パスの始まり(ベース)パスはそのExpandOptionのjsonファイルがあるフォルダ
+            *   | '../'と書くことで相対的に書ける
             * MOVE_OBJECT
             *   | 指定したボーンを指定した場所に入れる
             *   | move_objectで指定する
@@ -27,6 +29,8 @@ namespace RiClothes {
             public string operation_type;
             //特定の処理タイプで値を指定するときに使用する
             public string argument;
+            //対象のオブジェクトがアバターのオブジェクトかどうか
+            public bool is_avatar_object = false;
             //MOVE_BONE以外での対象オブジェクト
             public String[] target_object_list;
             //処理タイプがMOVE_BONEのとき使用

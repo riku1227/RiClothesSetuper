@@ -33,6 +33,11 @@ namespace RiClothes {
             return Application.dataPath + "/";
         }
 
+        public static string RemoveBasePath(string value) {
+            string replaceToSlash = value.Replace(@"\", "/");
+            return "Assets/" + replaceToSlash.Replace(Application.dataPath + "/", "");
+        }
+
         /*
         * "~/"から始まる相対パスから絶対パスを取得する
         * basePathでその相対パスの始まり場所を指定する
