@@ -55,7 +55,7 @@ namespace RiClothes {
                 setuperExpandOption.AfterSetuperProcess();
 
                 //残った服の残骸(プレハブ)を消す
-                //GameObject.DestroyImmediate (PrefabData.GetCloth());
+                GameObject.DestroyImmediate (PrefabData.GetCloth());
                 //Missing Scriptを削除する
                 MissingRemover.Remove(PrefabData.GetAvatar());
                 //シリアライズオブジェクトを編集した場合一回実行しないとUnityを閉じるときにクラッシュするのを対策
