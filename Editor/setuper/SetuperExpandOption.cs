@@ -35,6 +35,14 @@ namespace RiClothes {
             ExpandOptionOnGUI();
         }
 
+        public void OnExpandAdvancedOptionGUI() {
+            if(V2ExpandOptionProcess != null) {
+                V2ExpandOptionProcess.OnAdvancedOptionGUI();
+            } else if (V1ExpandOptionProcess != null) {
+                V1ExpandOptionProcess.OnAdvancedOptionGUI();
+            }
+        }
+
         /*
         * ボーンを移動する前に実行される
         * Setuperから呼び出し

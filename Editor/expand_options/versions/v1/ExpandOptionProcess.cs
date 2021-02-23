@@ -11,7 +11,6 @@ namespace RiClothes {
             private string clothPrefabParentPath;
 
             private bool isDeleteUnnecessaryObject = true;
-            private bool showAdvancedOption = false;
             private bool isDeleteIsEditorOnlyTag = true;
 
             public ExpandOptionProcess(ExpandOption _expandOption, string _clothPrefabParentPath) {
@@ -33,12 +32,11 @@ namespace RiClothes {
                 OnCustomOptionGUI();
 
                 GUILayout.Space(4);
-                showAdvancedOption = GUILayout.Toggle(showAdvancedOption, I18N.Instance().Get("option.toggle.show_advanced_option"));
-                if(showAdvancedOption) {
-                    GUILayout.Space(4);
-                    isDeleteIsEditorOnlyTag = GUILayout.Toggle(isDeleteIsEditorOnlyTag, I18N.Instance().Get("option.toggle.delete_is_set_editor_only_tag"));
-                    GUILayout.Label(I18N.Instance().Get("option.toggle.delete_is_set_editor_only_tag.description"));
-                }
+            }
+
+            public void OnAdvancedOptionGUI() {
+                isDeleteIsEditorOnlyTag = GUILayout.Toggle(isDeleteIsEditorOnlyTag, I18N.Instance().Get("option.toggle.delete_is_set_editor_only_tag"));
+                GUILayout.Label(I18N.Instance().Get("option.toggle.delete_is_set_editor_only_tag.description"));
             }
 
             //ExpandOptionのGUI処理

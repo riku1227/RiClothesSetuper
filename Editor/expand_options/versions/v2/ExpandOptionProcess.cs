@@ -10,8 +10,6 @@ namespace RiClothes {
             private ExpandOption expandOption;
             private string basePath;
 
-            //詳細オプションの表示
-            private bool showAdvancedOption = false;
             //削除コマンドを 'EditorOnly' にタグをセットにする
             private bool isDeleteIsEditorOnlyTag = true;
 
@@ -25,7 +23,6 @@ namespace RiClothes {
                 GUILayout.Space(8);
 
                 OnExpandGUI();
-                OnAdvancedOptionGUI();
             }
 
             private void OnExpandGUI() {
@@ -50,15 +47,7 @@ namespace RiClothes {
             }
 
             //詳細オプションの描画
-            private void OnAdvancedOptionGUI() {
-                GUILayout.Space(4);
-                showAdvancedOption = GUILayout.Toggle(showAdvancedOption, I18N.Instance().Get("option.toggle.show_advanced_option"));
-
-                if(!showAdvancedOption) {
-                    return;
-                }
-                GUILayout.Space(2);
-
+            public void OnAdvancedOptionGUI() {
                 isDeleteIsEditorOnlyTag = GUILayout.Toggle(isDeleteIsEditorOnlyTag, I18N.Instance().Get("option.toggle.delete_is_set_editor_only_tag"));
                 GUIUtil.RenderLabel(I18N.Instance().Get("option.toggle.delete_is_set_editor_only_tag.description"));
             }

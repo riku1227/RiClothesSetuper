@@ -10,6 +10,9 @@ namespace RiClothes {
         GameObject prevAvatarPrefab = null;
         GameObject prevClothPrefab = null;
 
+        //詳細オプションの表示
+        private bool showAdvancedOption = false;
+
         void OnDestroy() {
             PrefabData.ClearPrefabData();
             I18N.Instance().ResetText();
@@ -30,6 +33,8 @@ namespace RiClothes {
             //prev更新
             prevAvatarPrefab = PrefabData.GetAvatar();
             prevClothPrefab = PrefabData.GetCloth();
+
+            OnAdvancedOptionGUI();
 
             //上から16のマージン
             GUILayout.Space(16);
@@ -63,6 +68,22 @@ namespace RiClothes {
             }
 
             EditorGUILayout.EndScrollView();
+        }
+
+        void OnAdvancedOptionGUI() {
+            if(PrefabData.GetCloth() == null) {
+                return;
+            }
+            
+            GUILayout.Space(4);
+            showAdvancedOption = GUILayout.Toggle(showAdvancedOption, I18N.Instance().Get("option.toggle.show_advanced_option"));
+            GUILayout.Space(2);
+
+            if(!showAdvancedOption) {
+                return;
+            }
+
+            setuperExpandOption.OnExpandAdvancedOptionGUI();
         }
 
         private void SetupExpandOption() {
