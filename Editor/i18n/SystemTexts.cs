@@ -8,6 +8,8 @@ option.toggle.is_delete_unnecessary_object=Delete Unnecessary Object
 option.toggle.show_advanced_option=Show advanced option
 option.toggle.delete_is_set_editor_only_tag=(Recommend)Delete is 'Set EditorOnly Tag'
 option.toggle.delete_is_set_editor_only_tag.description=Do not delete the object but set the tag to Editor Only
+option.toggle.is_remove_missing_script=Remove Missing Script Component
+option.toggle.is_remove_missing_script.description=For environments without dynamic bones
 
 difftex.button.generate_all=Generate ALL Diff Texture
 ";
@@ -19,6 +21,8 @@ option.toggle.is_delete_unnecessary_object=不要なオブジェクトを削除�
 option.toggle.show_advanced_option=詳細オプションを表示する
 option.toggle.delete_is_set_editor_only_tag=(推奨)削除を'EditorOnlyタグに設定'にする
 option.toggle.delete_is_set_editor_only_tag.description=オブジェクトを削除せず、タグをEditor Onlyに設定するようにします
+option.toggle.is_remove_missing_script=Missing Scriptコンポーネントを削除します
+option.toggle.is_remove_missing_script.description=ダイナミックボーンが無い環境用です
 
 difftex.button.generate_all=全ての差分テクスチャを生成
 ";

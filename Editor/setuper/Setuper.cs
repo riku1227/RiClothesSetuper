@@ -12,6 +12,7 @@ namespace RiClothes {
 
         //詳細オプションの表示
         private bool showAdvancedOption = false;
+        private bool isRemoveMissingScript = true;
 
         void OnDestroy() {
             PrefabData.ClearPrefabData();
@@ -61,8 +62,11 @@ namespace RiClothes {
 
                 //残った服の残骸(プレハブ)を消す
                 GameObject.DestroyImmediate (PrefabData.GetCloth());
-                //Missing Scriptを削除する
-                MissingRemover.Remove(PrefabData.GetAvatar());
+
+                //Missing Scriptを削除するオプションが有効のときMissing Scriptを削除する
+                if(isRemoveMissingScript) {
+                    MissingRemover.Remove(PrefabData.GetAvatar());
+                }
                 //シリアライズオブジェクトを編集した場合一回実行しないとUnityを閉じるときにクラッシュするのを対策
                 EditorApplication.ExecuteMenuItem("Edit/Play");
             }
@@ -74,7 +78,7 @@ namespace RiClothes {
             if(PrefabData.GetCloth() == null) {
                 return;
             }
-            
+
             GUILayout.Space(4);
             showAdvancedOption = GUILayout.Toggle(showAdvancedOption, I18N.Instance().Get("option.toggle.show_advanced_option"));
             GUILayout.Space(2);
@@ -82,6 +86,10 @@ namespace RiClothes {
             if(!showAdvancedOption) {
                 return;
             }
+
+            isRemoveMissingScript = GUILayout.Toggle(isRemoveMissingScript, I18N.Instance().Get("option.toggle.is_remove_missing_script"));
+            GUIUtil.RenderLabel(I18N.Instance().Get("option.toggle.is_remove_missing_script.description"));
+            GUILayout.Space(2);
 
             setuperExpandOption.OnExpandAdvancedOptionGUI();
         }
