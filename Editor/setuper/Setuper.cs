@@ -131,7 +131,10 @@ namespace RiClothes {
                 if(setuperExpandOption.CheckExcludeObject(clothObject)) {
                     skipCount++;
                 } else {
-                    clothObject.name = setuperExpandOption.AppendID(clothObject.name);
+                    //V2はオブジェクトにもIDをつける
+                    if(setuperExpandOption.GetExpandOptionVersion() == 2) {
+                        clothObject.name = setuperExpandOption.AppendID(clothObject.name);
+                    }
                     clothObject.SetParent(PrefabData.GetAvatar().transform);
                 }
             }

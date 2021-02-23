@@ -180,7 +180,6 @@ namespace RiClothes {
             }
 
             public void ProcessCustomOption(String optionOperation, bool isCheck, String argument, String[] targetObjectList) {
-                AppendIDToArray(targetObjectList);
                 switch (optionOperation.ToUpper()) {
                     case "DELETE_OBJECT":
                         if(isCheck) {
@@ -262,12 +261,6 @@ namespace RiClothes {
             //valueの後ろにIDを入れて返す
             public string AppendID(string value) {
                 return value + "_" + expandOption.id;
-            }
-
-            private void AppendIDToArray(string[] values) {
-                for(int i = 0; i < values.Length; i++) {
-                    values[i] = AppendID(values[i]);
-                }
             }
 
             /*

@@ -212,5 +212,20 @@ namespace RiClothes {
                 return false;
             }
         }
+
+        /*
+        * ExpandOptionのバージョンを返す
+        * ExpandOptionがない場合は0を返す
+        */
+        public int GetExpandOptionVersion() {
+            int version = 0;
+            if(V2ExpandOptionProcess != null) {
+                version = 2;
+            } else if (V1ExpandOptionProcess != null) {
+                version = 1;
+            }
+
+            return version;
+        }
     }
 }
