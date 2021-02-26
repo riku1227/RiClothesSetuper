@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEditor;
@@ -43,10 +44,20 @@ namespace RiClothes {
         * basePathでその相対パスの始まり場所を指定する
         */
         public static string GetPathFromRelative(string basePath, string relativePath) {
-            string nowPath = basePath;
+            List<string> nowPath = new List<string>( Regex.Split(basePath, @"\/|\\") );
+            /* 
+            * basePathの最後が'/'(ディレクトリ)のとき空の文字列が配列の最後に入るのを消す
+            * relativePathは最後がディレクトリのときに'/'をつけないと行けないので、消さない
+            */
 
-            if(!Directory.Exists(basePath)) {
-                return nowPath;
+            if(nowPath[nowPath.Count -1] == "") {
+                nowPath.RemoveAt(nowPath.Count -1);
+            }
+
+            string resultPath = "";
+
+            if(relativePath == "") {
+                return basePath;
             }
 
             //"/"か"\"で文字列を分割
@@ -56,21 +67,22 @@ namespace RiClothes {
 
                 //"../"で一つディレクトリを戻る
                 if(relativeStr == "..") {
-                    //Directory.GetParentは最後に"/"や"\"がついているとそのディレクトリを返すので、Path.GetDirectoryNameで"/"や"\"を除いている
-                    nowPath = Directory.GetParent(Path.GetDirectoryName(nowPath)).FullName + "/";
+                    nowPath.RemoveAt(nowPath.Count - 1);
                 }
-                //relativePathの最後が'/'や'\'の場合、最後の要素が空の文字列になって '/'がもう一つつけられてしまうのを防ぐために空かどうかの判定を
-                else if(relativeStr != "") {
-                    //ディレクトリだったら最後に"/"をつける
-                    if(Directory.Exists(nowPath + relativeStr)) {
-                        nowPath = nowPath + relativeStr + "/";
-                    } else if (File.Exists(nowPath + relativeStr)) {
-                        nowPath = nowPath + relativeStr;
-                    }
+                else {
+                    nowPath.Add(relativeStr);
                 }
             }
 
-            return nowPath;
+            for(int i = 0; i < nowPath.Count; i++) {
+                string pathTemp = nowPath[i];
+                if(i > 0) {
+                    resultPath += "/";
+                }
+                resultPath += pathTemp;
+            }
+
+            return resultPath;
         }
 
         public static Texture2D PNGToTexture2D(String path) {
