@@ -69,33 +69,17 @@ namespace RiClothes {
                 //DiffText V1の読み込み
                 if(optionPath.option_json_path != null && optionPath.option_json_path != "") {
                     string optionJsonPath = "";
-                    if(optionPath.option_json_path.IndexOf("~/") == 0) {
-                        //プレハブからの相対パス
-                        optionJsonPath = FileUtil.GetPathFromRelative(basePath, optionPath.option_json_path.Replace("~/", ""));
-                    } else {
-                        //Assetsからの絶対パス
-                        optionJsonPath = FileUtil.GetBasePath() + optionPath.option_json_path;
-                    }
+                    optionJsonPath = FileUtil.GetPathFromRelative(basePath, optionPath.option_json_path);
                     V1.ExpandOption expandOption = FileUtil.LoadJsonFile<V1.ExpandOption>(optionJsonPath);
                     string outputPath = basePath;
                     if(optionPath.base_path != null && optionPath.base_path != "") {
-                        if(optionPath.base_path.IndexOf("~/") == 0) {
-                            outputPath = FileUtil.GetPathFromRelative(basePath, optionPath.base_path.Replace("~/", ""));
-                        } else {
-                            outputPath = optionPath.base_path;
-                        }
+                        outputPath = FileUtil.GetPathFromRelative(basePath, optionPath.base_path);
                     }
                     if(expandOption != null) {
                         V1DiffTextGen = new V1.DiffTexGeneratorProcess(expandOption.difference_textures, outputPath);
                     }
                 } else if (optionPath.base_path != null && optionPath.base_path != "") {
-                    string optionBasePath = "";
-                    if(optionPath.base_path.IndexOf("~/") == 0) {
-                        //プレハブからの相対パス
-                        optionBasePath = FileUtil.GetPathFromRelative(basePath, optionPath.base_path.Replace("~/", ""));
-                    } else {
-                        optionBasePath = FileUtil.GetBasePath() + optionPath.base_path;
-                    }
+                    string optionBasePath = FileUtil.GetPathFromRelative(basePath, optionPath.base_path);
 
                     LoadDiffTexOnBasePath(optionBasePath);
                 }
@@ -118,20 +102,14 @@ namespace RiClothes {
         void TryLoadV2(string basePath, OptionPath optionPath) {
             if(optionPath != null) {
                 if(optionPath.diff_tex_json_path != null && optionPath.diff_tex_json_path != "") {
-                    string diffTexJsonPath = optionPath.diff_tex_json_path;
-                    if(optionPath.diff_tex_json_path.IndexOf("~/") != -1) {
-                        diffTexJsonPath = FileUtil.GetPathFromRelative(basePath, optionPath.diff_tex_json_path.Replace("~/", ""));
-                    }
+                    string diffTexJsonPath = diffTexJsonPath = FileUtil.GetPathFromRelative(basePath, optionPath.diff_tex_json_path);
 
                     V2.DifferenceTextureGenerator diffTex = FileUtil.LoadJsonFile<V2.DifferenceTextureGenerator>(diffTexJsonPath);
                     if(diffTex != null) {
                         V2DiffTextGen = new V2.DiffTexGeneratorProcess(diffTex, Path.GetDirectoryName(diffTexJsonPath));
                     }
                 } else if (optionPath.base_path != null && optionPath.base_path != "") {
-                    string diffTexBasePath = optionPath.base_path;
-                    if(optionPath.base_path.IndexOf("~/") != -1) {
-                        diffTexBasePath = FileUtil.GetPathFromRelative(basePath, optionPath.base_path.Replace("~/", ""));
-                    }
+                    string diffTexBasePath = diffTexBasePath = FileUtil.GetPathFromRelative(basePath, optionPath.base_path);
 
                     V2.DifferenceTextureGenerator diffTex = V2.DifferenceTextureGenerator.LoadDiffTexGenFromBaseDir(diffTexBasePath);
                     if(diffTex != null) {

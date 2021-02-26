@@ -94,23 +94,11 @@ namespace RiClothes {
 
                 if(optionPath != null) {
                     if (optionPath.option_json_path != null && optionPath.option_json_path != "") {
-                        if(optionPath.option_json_path.IndexOf("~/") == 0) {
-                            //プレハブからの相対パス
-                            expandJsonPath = FileUtil.GetPathFromRelative(basePath, optionPath.option_json_path.Replace("~/", ""));
-                        } else {
-                            //Assetsからの絶対パス
-                            expandJsonPath = FileUtil.GetBasePath() + optionPath.option_json_path;
-                        }
+                        //プレハブからの相対パス
+                        expandJsonPath = FileUtil.GetPathFromRelative(basePath, optionPath.option_json_path);
                         expandOptionVersion = FileUtil.LoadJsonFile<ExpandOptionVersion>(expandJsonPath);
                     } else if (optionPath.base_path != null && optionPath.base_path != "") {
-                        string optionBasePath = "";
-                        if(optionPath.base_path.IndexOf("~/") == 0) {
-                            //プレハブからの相対パス
-                            optionBasePath = FileUtil.GetPathFromRelative(basePath, optionPath.base_path.Replace("~/", ""));
-                        } else {
-                            //Assetsからの絶対パス
-                            optionBasePath = FileUtil.GetBasePath() + optionPath.base_path;
-                        }
+                        string optionBasePath = FileUtil.GetPathFromRelative(basePath, optionPath.base_path);
 
                         LoadOptionVersionJsonOnBasePath(optionBasePath);
                     }
