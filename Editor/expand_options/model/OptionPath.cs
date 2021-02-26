@@ -8,6 +8,7 @@ namespace RiClothes {
         public string base_path;
         public string option_json_path;
         public string language_dir_path;
+        public string diff_tex_json_path;
 
         static private string[] pathJsonFileNames = new string[] { "path.json", "Path.json", "option_path.json", "OptionPath.json", "file_path.json", "FilePath.json" };
 

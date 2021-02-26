@@ -12,6 +12,7 @@ option.toggle.is_remove_missing_script=Remove Missing Script Component
 option.toggle.is_remove_missing_script.description=For environments without dynamic bones
 
 difftex.button.generate_all=Generate ALL Diff Texture
+difftex.button.generate_tex=Generate: 
 ";
         static public string JAPANESE = $@"
 option.input.avatar=アバター
@@ -25,6 +26,7 @@ option.toggle.is_remove_missing_script=Missing Scriptコンポーネントを削
 option.toggle.is_remove_missing_script.description=ダイナミックボーンが無い環境用です
 
 difftex.button.generate_all=全ての差分テクスチャを生成
+difftex.button.generate_tex=生成: 
 ";
     }
 }
