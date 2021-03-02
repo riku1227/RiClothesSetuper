@@ -13,5 +13,10 @@ namespace RiClothes {
         static void DiffTextureGenerator() {
             EditorWindow.GetWindow<DiffTexGenerator> (true, "Diff Texture Generator");
         }
+
+        [MenuItem("RiClothes/Cloth UnInstaller")]
+        static void ClothUnInstaller() {
+            EditorWindow.GetWindow<ClothUnInstallerWindow> (true, "RiClothes Cloth Uninstaller");
+        }
     }
 }

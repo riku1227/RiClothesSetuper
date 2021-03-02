@@ -13,6 +13,10 @@ option.toggle.is_remove_missing_script.description=For environments without dyna
 
 difftex.button.generate_all=Generate ALL Diff Texture
 difftex.button.generate_tex=Generate: 
+
+cloth_uninstaller.description=Remove all objects and bones added by clothes\nActivate a deactivated object\nUntagged tags are set to EditorOnly\Not recommended to use it on avatars that have been modified after being dressed up.
+cloth_uninstaller.un_support_version=Uninstall Cloth can only be used by avatars who have\n dressed in clothes that support Expand Option V2 or higher.
+cloth_uninstaller.uninstall_button=Uninstall
 ";
         static public string JAPANESE = $@"
 option.input.avatar=アバター
@@ -27,6 +31,9 @@ option.toggle.is_remove_missing_script.description=ダイナミックボーン�
 
 difftex.button.generate_all=全ての差分テクスチャを生成
 difftex.button.generate_tex=生成: 
+cloth_uninstaller.description=服で追加されたオブジェクトとボーンを全て削除\n非アクティブにしたオブジェクトをアクティブ化\nタグがEditorOnlyになってるのを、Untaggedにします\n着せ替えた後に改変したアバターへの使用は非推奨です
+cloth_uninstaller.un_support_version=Uninstall ClothはExpand Option V2以上対応の服で\n着替えたアバターのみ使用できます
+cloth_uninstaller.uninstall_button=アンインストール
 ";
     }
 }

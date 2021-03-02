@@ -385,6 +385,13 @@ namespace RiClothes {
                 }
                 return result;
             }
+
+            /*
+            * IDを返す
+            */
+            public string GetID() {
+                return expandOption.id;
+            }
         }
     }
 }

@@ -273,6 +273,13 @@ namespace RiClothes {
 
                 bone.name = AppendID(bone.name);
             }
+
+            /*
+            * IDを返す
+            */
+            public string GetID() {
+                return expandOption.id;
+            }
         }
     }
 }

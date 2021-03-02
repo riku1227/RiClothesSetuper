@@ -5,15 +5,15 @@ using UnityEngine;
 
 namespace RiClothes {
     public class SetuperExpandOption {
-        private string clothPrefabParentPath = "";
+        protected string clothPrefabParentPath = "";
 
         //バージョンを読み込んだあと本体を読み込むときに使う
         private string expandJsonPath;
         private bool isLoadExpandGUI = false;
         //まずバージョンだけ読み込んでそのあとの処理をバージョンによって変える
-        private ExpandOptionVersion expandOptionVersion;
-        private V1.ExpandOptionProcess V1ExpandOptionProcess;
-        private V2.ExpandOptionProcess V2ExpandOptionProcess;
+        protected ExpandOptionVersion expandOptionVersion;
+        protected V1.ExpandOptionProcess V1ExpandOptionProcess;
+        protected V2.ExpandOptionProcess V2ExpandOptionProcess;
 
         public SetuperExpandOption() {
             if(PrefabData.GetCloth() != null) {
@@ -222,6 +222,21 @@ namespace RiClothes {
             }
 
             return version;
+        }
+
+        /*
+        * ExpandOptionのIDを返す
+        * ExpandOptionがない場合は空の文字列を返す
+        */
+        public string GetExpandOptionID() {
+            string id = "";
+            if(V2ExpandOptionProcess != null) {
+                id = V2ExpandOptionProcess.GetID();
+            } else if (V1ExpandOptionProcess != null) {
+                id = V1ExpandOptionProcess.GetID();
+            }
+
+            return id;
         }
     }
 }
