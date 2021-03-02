@@ -16,7 +16,9 @@ namespace RiClothes {
             for(int i = 0; i < childCount; i++) {
                 Transform child = transform.GetChild(i - removeCount);
                 child.gameObject.SetActive(true);
-                child.gameObject.tag = "Untagged";
+                if(child.gameObject.tag == "EditorOnly") {
+                    child.gameObject.tag = "Untagged";
+                }
 
                 if(0 < child.childCount) {
                     this.UnInstall(child, id);
