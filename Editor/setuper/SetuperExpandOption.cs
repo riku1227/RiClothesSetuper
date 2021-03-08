@@ -23,7 +23,6 @@ namespace RiClothes {
 
         public void OnExpandGUI() {
             GUILayout.Space(8);
-            GUILayout.Label(clothPrefabParentPath);
 
             if(!isLoadExpandGUI) {
                 //まずバージョンを読み込む
