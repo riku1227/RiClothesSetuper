@@ -111,10 +111,7 @@ namespace RiClothes {
                 } else if (optionPath.base_path != null && optionPath.base_path != "") {
                     string diffTexBasePath = diffTexBasePath = FileUtil.GetPathFromRelative(basePath, optionPath.base_path);
 
-                    V2.DifferenceTextureGenerator diffTex = V2.DifferenceTextureGenerator.LoadDiffTexGenFromBaseDir(diffTexBasePath);
-                    if(diffTex != null) {
-                        V2DiffTextGen = new V2.DiffTexGeneratorProcess(diffTex, Path.GetDirectoryName(diffTexBasePath));
-                    }
+                    V2DiffTextGen = V2.DifferenceTextureGenerator.LoadDiffTexGenFromBaseDir(diffTexBasePath);
                 }
             }
 
@@ -123,10 +120,7 @@ namespace RiClothes {
             }
 
             if(clothPrefabParentPath != "") {
-                V2.DifferenceTextureGenerator diffTex = V2.DifferenceTextureGenerator.LoadDiffTexGenFromBaseDir(basePath);
-                if(diffTex != null) {
-                    V2DiffTextGen = new V2.DiffTexGeneratorProcess(diffTex, Path.GetDirectoryName(basePath));
-                }
+                V2DiffTextGen = V2.DifferenceTextureGenerator.LoadDiffTexGenFromBaseDir(basePath);
             }
         }
 

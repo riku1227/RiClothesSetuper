@@ -36,16 +36,18 @@ namespace RiClothes {
                 "difference_texture_generator.json"};
 
             //ベースパスからDiffTexGenのjsonファイルを読み込む
-            public static DifferenceTextureGenerator LoadDiffTexGenFromBaseDir(string basePath) {
+            public static DiffTexGeneratorProcess LoadDiffTexGenFromBaseDir(string basePath) {
                 for(int i = 0; i < diffTexJsonFileNames.Length; i++) {
                     string jsonPath = basePath + diffTexJsonFileNames[i];
                     if(File.Exists(jsonPath)) {
-                        return FileUtil.LoadJsonFile<DifferenceTextureGenerator>(jsonPath);
+                        DifferenceTextureGenerator diffTexGen =  FileUtil.LoadJsonFile<DifferenceTextureGenerator>(jsonPath);
+                        return new DiffTexGeneratorProcess(diffTexGen, jsonPath);
                     }
 
                     jsonPath = basePath + "RiClothesSetuper/" + diffTexJsonFileNames[i];
                     if(File.Exists(jsonPath)) {
-                        return FileUtil.LoadJsonFile<DifferenceTextureGenerator>(jsonPath);
+                        DifferenceTextureGenerator diffTexGen =  FileUtil.LoadJsonFile<DifferenceTextureGenerator>(jsonPath);
+                        return new DiffTexGeneratorProcess(diffTexGen, jsonPath);
                     }
                 }
 
