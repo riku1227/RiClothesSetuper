@@ -19,7 +19,8 @@
 * 一応アバターのボーンに同じ名前のボーンを入れるタイプの専用服はRiClothes Setuperに対応していなくても導入できるように作っています  
 
 ## ドキュメント
-まだ書けてない...
+当リポジトリのWikiに書いてあります  
+[https://github.com/riku1227/RiClothesSetuper/wiki](https://github.com/riku1227/RiClothesSetuper/wiki)
 
 ## 更新履歴
 * 2.0.0
