@@ -62,14 +62,14 @@ namespace RiClothes {
                     case "toggle":
                         customOption.is_check = GUILayout.Toggle(customOption.is_check, " " + I18N.Instance().Get(customOption.name));
                         if(customOption.description != null && customOption.description != "") {
-                            GUIUtil.RenderLabel(customOption.description);
+                            GUIUtil.RenderLabel(I18N.Instance().Get(customOption.description));
                         }
                     break;
 
                     case "grid":
                         GUILayout.Label(I18N.Instance().Get(customOption.name));
                         if(customOption.description != null && customOption.description != null) {
-                            GUIUtil.RenderLabel(customOption.description);
+                            GUIUtil.RenderLabel(I18N.Instance().Get(customOption.description));
                         }
 
                         //GUI用の文字列リストを作る
