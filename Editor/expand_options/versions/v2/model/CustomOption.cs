@@ -36,6 +36,8 @@ namespace RiClothes {
             public CustomGridOption[] grid_list;
             // 適用ボタンを表示するか
             public Boolean display_apply_button = false;
+            //apply_filterのオブジェクトがアバターのオブジェクトかどうか
+            public Boolean apply_filter_is_avatar_object = false;
             //特定オブジェクトが存在するときに適用ボタンを表示するようにする
             public String[] apply_filter;
             //オプションの処理内容

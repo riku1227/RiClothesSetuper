@@ -90,7 +90,14 @@ namespace RiClothes {
 
                 if(customOption.apply_filter != null && PrefabData.GetAvatar() != null) {
                     for(int filterCount = 0; filterCount < customOption.apply_filter.Length; filterCount++ ) {
-                        Transform filterObject = PrefabData.GetAvatar().transform.Find(customOption.apply_filter[filterCount]);
+                        string filterObjectName = customOption.apply_filter[filterCount];
+
+                        if(customOption.apply_filter_is_avatar_object == true) {
+                            filterObjectName = AppendID(filterObjectName);
+                        }
+
+                        Transform filterObject = PrefabData.GetAvatar().transform.Find(filterObjectName);
+
                         if(filterObject != null) {
                             filterPassed = true;
                         }
