@@ -92,7 +92,7 @@ namespace RiClothes {
                     for(int filterCount = 0; filterCount < customOption.apply_filter.Length; filterCount++ ) {
                         string filterObjectName = customOption.apply_filter[filterCount];
 
-                        if(customOption.apply_filter_is_avatar_object == true) {
+                        if(!customOption.apply_filter_is_avatar_object) {
                             filterObjectName = AppendID(filterObjectName);
                         }
 
