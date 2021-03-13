@@ -6,6 +6,11 @@ namespace RiClothes {
         private ClothUnInstaller clothUnInstaller;
         private GameObject prevCloth;
         private GUIStyle styleTitleStyle;
+
+        void OnDestroy() {
+            PrefabData.ClearPrefabData();
+            I18N.Instance().ResetText();
+        }
         void Awake() {
             /*
             * Windowsのタイトルに使用するラベルのスタイル
