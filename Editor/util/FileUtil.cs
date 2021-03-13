@@ -36,7 +36,8 @@ namespace RiClothes {
 
         public static string RemoveBasePath(string value) {
             string replaceToSlash = value.Replace(@"\", "/");
-            return "Assets/" + replaceToSlash.Replace(Application.dataPath + "/", "");
+            //valueにApplication.dataPathが含まれていなかった場合、Assets/Assetsになってしまうのを防ぐためにAssetsをリプレースする
+            return "Assets/" + replaceToSlash.Replace(Application.dataPath + "/", "").Replace("Assets/", "");
         }
 
         /*
