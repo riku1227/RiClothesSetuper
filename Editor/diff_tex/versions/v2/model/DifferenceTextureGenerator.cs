@@ -41,13 +41,13 @@ namespace RiClothes {
                     string jsonPath = basePath + diffTexJsonFileNames[i];
                     if(File.Exists(jsonPath)) {
                         DifferenceTextureGenerator diffTexGen =  FileUtil.LoadJsonFile<DifferenceTextureGenerator>(jsonPath);
-                        return new DiffTexGeneratorProcess(diffTexGen, jsonPath);
+                        return new DiffTexGeneratorProcess(diffTexGen, Path.GetDirectoryName(jsonPath));
                     }
 
                     jsonPath = basePath + "RiClothesSetuper/" + diffTexJsonFileNames[i];
                     if(File.Exists(jsonPath)) {
                         DifferenceTextureGenerator diffTexGen =  FileUtil.LoadJsonFile<DifferenceTextureGenerator>(jsonPath);
-                        return new DiffTexGeneratorProcess(diffTexGen, jsonPath);
+                        return new DiffTexGeneratorProcess(diffTexGen, Path.GetDirectoryName(jsonPath));
                     }
                 }
 
