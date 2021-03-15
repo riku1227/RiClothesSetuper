@@ -15,6 +15,8 @@ namespace RiClothes {
         protected V1.ExpandOptionProcess V1ExpandOptionProcess;
         protected V2.ExpandOptionProcess V2ExpandOptionProcess;
 
+        protected bool isUnsupportedVersion = false;
+
         public SetuperExpandOption() {
             if(PrefabData.GetCloth() != null) {
                 clothPrefabParentPath = PrefabUtility.GetPrefabAssetPathOfNearestInstanceRoot(PrefabData.GetCloth());
@@ -29,6 +31,8 @@ namespace RiClothes {
                 LoadExpandFileVersion();
                 I18N.Instance().LoadLanguage(clothPrefabParentPath);
                 LoadExpandOption();
+            } else if(isUnsupportedVersion) {
+                GUILayout.Label(I18N.Instance().Get("option.unsupported_version"));
             }
 
             ExpandOptionOnGUI();
@@ -157,6 +161,7 @@ namespace RiClothes {
 
                 default:
                     Debug.Log("非対応のバージョンです");
+                    isUnsupportedVersion = true;
                 break;
             }
         }
