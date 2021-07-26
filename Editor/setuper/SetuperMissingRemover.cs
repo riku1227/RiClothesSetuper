@@ -8,10 +8,32 @@ namespace RiClothes {
             try {
                 PrefabUtility.UnpackPrefabInstance(gameObject, PrefabUnpackMode.Completely, InteractionMode.AutomatedAction);
             } catch(ArgumentException) { }
-            RemoveMissingScript(gameObject);
+            #if UNITY_2018
+                RemoveMissingScript_2018(gameObject);
+            #endif
+            #if UNITY_2019_1_OR_NEWER
+                RemoveMissingScript_2019(gameObject);
+            #endif
         }
 
-        static private void RemoveMissingScript(GameObject gameObject) {
+        /*
+        * Unity 2019でMissing Componentを削除する処理
+        */
+        static private void RemoveMissingScript_2019(GameObject gameObject) {
+            //Unity 2019でMissing Scirptを削除する機能が追加された
+            GameObjectUtility.RemoveMonoBehavioursWithMissingScript(gameObject);
+            //子オブジェクトのMissing Scriptを削除するために再起実行する
+            if(gameObject.transform.childCount > 0) {
+                for(int i = 0; i < gameObject.transform.childCount; i++) {
+                    RemoveMissingScript_2019(gameObject.transform.GetChild(i).gameObject);
+                }
+            }
+        }
+
+        /*
+        * Unity 2018でMissing Componentを削除する処理
+        */
+        static private void RemoveMissingScript_2018(GameObject gameObject) {
             //そのGameObjectについてるコンポーネントを取得
             Component[] components = gameObject.GetComponents<Component>();
             int count = 0;
@@ -32,7 +54,7 @@ namespace RiClothes {
 
             if(gameObject.transform.childCount > 0) {
                 for(int i = 0; i < gameObject.transform.childCount; i++) {
-                    RemoveMissingScript(gameObject.transform.GetChild(i).gameObject);
+                    RemoveMissingScript_2018(gameObject.transform.GetChild(i).gameObject);
                 }
             }
         }

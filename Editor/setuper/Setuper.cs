@@ -67,8 +67,11 @@ namespace RiClothes {
                 if(isRemoveMissingScript) {
                     SetuperMissingRemover.Remove(PrefabData.GetAvatar());
                 }
-                //シリアライズオブジェクトを編集した場合一回実行しないとUnityを閉じるときにクラッシュするのを対策
-                EditorApplication.ExecuteMenuItem("Edit/Play");
+                #if UNITY_2018
+                    //シリアライズオブジェクトを編集した場合一回実行しないとUnityを閉じるときにクラッシュするのを対策
+                    EditorApplication.ExecuteMenuItem("Edit/Play");
+                #endif
+                Close();
             }
 
             EditorGUILayout.EndScrollView();
