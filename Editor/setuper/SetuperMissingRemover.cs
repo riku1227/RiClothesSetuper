@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEditor;
 
 namespace RiClothes {
-    public class MissingRemover {
+    public class SetuperMissingRemover {
         static public void Remove(GameObject gameObject) {
             try {
                 PrefabUtility.UnpackPrefabInstance(gameObject, PrefabUnpackMode.Completely, InteractionMode.AutomatedAction);

@@ -65,7 +65,7 @@ namespace RiClothes {
 
                 //Missing Scriptを削除するオプションが有効のときMissing Scriptを削除する
                 if(isRemoveMissingScript) {
-                    MissingRemover.Remove(PrefabData.GetAvatar());
+                    SetuperMissingRemover.Remove(PrefabData.GetAvatar());
                 }
                 //シリアライズオブジェクトを編集した場合一回実行しないとUnityを閉じるときにクラッシュするのを対策
                 EditorApplication.ExecuteMenuItem("Edit/Play");
