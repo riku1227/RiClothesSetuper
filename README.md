@@ -23,6 +23,12 @@
 [https://github.com/riku1227/RiClothesSetuper/wiki](https://github.com/riku1227/RiClothesSetuper/wiki)
 
 ## 更新履歴
+* 2.1.0 (2021/07/26)
+  * Unity 2019をサポートしました
+    * Missing Componentを削除する動作を改善
+    * 一部ラベルのスタイルがおかしいのを修正
+  * ウィンドウ名にバージョンが表示されるようになりました
+  * 'Missing Remover'と競合していたのを修正しました
 * 2.0.0
   * 書き直しました
   * PathInfoのコンポーネントは廃止されました  
