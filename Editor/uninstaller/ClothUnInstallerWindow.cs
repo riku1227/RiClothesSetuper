@@ -18,7 +18,7 @@ namespace RiClothes {
             * フォントスタイル: Bold
             * マージン: 左4, 他0
             */
-            styleTitleStyle = new GUIStyle();
+            styleTitleStyle = new GUIStyle(EditorStyles.label);
             styleTitleStyle.fontSize = 16;
             styleTitleStyle.fontStyle = FontStyle.Bold;
             styleTitleStyle.margin = new RectOffset(5, 0, 0, 0);

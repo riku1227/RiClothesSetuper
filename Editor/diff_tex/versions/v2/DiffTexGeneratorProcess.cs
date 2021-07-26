@@ -28,7 +28,7 @@ namespace RiClothes {
                 * マージン: 左4, 残り0
                 * ---------------------
                 */
-                styleTextureNameLabel = new GUIStyle();
+                styleTextureNameLabel = new GUIStyle(EditorStyles.label);
                 styleTextureNameLabel.fontSize = 16;
                 styleTextureNameLabel.fontStyle = FontStyle.Bold;
                 styleTextureNameLabel.margin = new RectOffset(4, 0, 0, 0);
@@ -36,7 +36,7 @@ namespace RiClothes {
                 /*
                 * パーツの名前に使用されるラベルのスタイル
                 */
-                stylePartsNameLabel = new GUIStyle();
+                stylePartsNameLabel = new GUIStyle(EditorStyles.label);
                 stylePartsNameLabel.fontSize = 14;
                 stylePartsNameLabel.fontStyle = FontStyle.Bold;
                 stylePartsNameLabel.margin = new RectOffset(4, 0, 0, 0);

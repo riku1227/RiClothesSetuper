@@ -16,7 +16,7 @@ namespace RiClothes {
                 outputPath = _outputPath;
 
                 //タイトルに使用するラベル用のスタイルを定義
-                titleLabelStyle = new GUIStyle();
+                titleLabelStyle = new GUIStyle(EditorStyles.label);
                 titleLabelStyle.fontSize = 18;
             }
 
