@@ -243,7 +243,7 @@ namespace RiClothes
                             Transform target = PrefabData.GetAvatar().transform.Find(targetObjectName);
                             if (target == null)
                             {
-                                LogUtil.WarningOnCustomOperation("DELETE_OBJECT", "ターゲットオブジェクトが存在しません", optionName);
+                                LogUtil.WarningOnCustomOperation("DELETE_OBJECT", "ターゲットオブジェクトが存在しません\n" + targetObjectName, optionName);
                                 return;
                             }
                             if (isDeleteIsEditorOnlyTag)
@@ -274,7 +274,7 @@ namespace RiClothes
                             Transform target = PrefabData.GetAvatar().transform.Find(targetObjectName);
                             if (target == null)
                             {
-                                LogUtil.WarningOnCustomOperation("NOT_DELETE_OBJECT", "ターゲットオブジェクトが存在しません", optionName);
+                                LogUtil.WarningOnCustomOperation("NOT_DELETE_OBJECT", "ターゲットオブジェクトが存在しません\n" + targetObjectName, optionName);
                                 return;
                             }
                             if (isDeleteIsEditorOnlyTag)
@@ -307,7 +307,7 @@ namespace RiClothes
                             {
                                 target.gameObject.SetActive(true);
                             } else {
-                                LogUtil.WarningOnCustomOperation("ENABLE_OBJECT", "ターゲットオブジェクトが存在しません", optionName);
+                                LogUtil.WarningOnCustomOperation("ENABLE_OBJECT", "ターゲットオブジェクトが存在しません\n" + targetObjectName, optionName);
                             }
                         }
                         break;
@@ -331,7 +331,7 @@ namespace RiClothes
                             {
                                 target.gameObject.SetActive(false);
                             } else {
-                                LogUtil.WarningOnCustomOperation("DISABLE_OBJECT", "ターゲットオブジェクトが存在しません", optionName);
+                                LogUtil.WarningOnCustomOperation("DISABLE_OBJECT", "ターゲットオブジェクトが存在しません\n" + targetObjectName, optionName);
                             }
                         }
                         break;
@@ -369,7 +369,7 @@ namespace RiClothes
                                         LogUtil.ErrorOnCustomOperation("SET_MATERIAL", "ターゲットオブジェクトにSkinnedMeshRendererが存在しません", optionName);
                                     }
                                 } else {
-                                    LogUtil.WarningOnCustomOperation("SET_MATERIAL", "ターゲットオブジェクトが存在しません", optionName);
+                                    LogUtil.WarningOnCustomOperation("SET_MATERIAL", "ターゲットオブジェクトが存在しません\n" + targetObjectName, optionName);
                                 }
                             }
                         } else {
@@ -434,7 +434,7 @@ namespace RiClothes
 
                             Transform target = PrefabData.GetAvatar().transform.Find(targetObjectName);
                             if(target == null) {
-                                LogUtil.WarningOnCustomOperation("SET_BLEND_SHAPE", "ターゲットオブジェクトが存在しません", optionName);
+                                LogUtil.WarningOnCustomOperation("SET_BLEND_SHAPE", "ターゲットオブジェクトが存在しません\n" + targetObjectName, optionName);
                                 return;
                             }
                             SkinnedMeshRenderer skinnedMeshRenderer = target.gameObject.GetComponent<SkinnedMeshRenderer>();
