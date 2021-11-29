@@ -25,6 +25,13 @@ namespace RiClothes {
             *   | move_objectで指定する
             * NONE
             *   | 何もしない
+            *
+            * V3
+            * SET_BLEND_SHAPE
+            *   | 指定したオブジェクトのブレンドシェイプ (シェイプキー) をセットする
+            *   | argumentでブレンドシェイプの名前とセットする値を指定する
+            *   | 書き方
+            *   | example_shape:100
             */
             public string operation_type;
             //特定の処理タイプで値を指定するときに使用する

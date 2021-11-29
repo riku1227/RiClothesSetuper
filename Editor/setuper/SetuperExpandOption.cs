@@ -152,6 +152,8 @@ namespace RiClothes {
                 break;
 
                 case 2:
+                //RiClothes Setuper V 2.1.1
+                case 3:
                     V2.ExpandOption v2ExpandOption = FileUtil.LoadJsonFile<V2.ExpandOption>(expandJsonPath);
                     if(v2ExpandOption != null) {
                         //V2のExpandOption内で使用されるパスのベースはそのJSONファイルがあるフォルダになる
