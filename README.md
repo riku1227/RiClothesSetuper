@@ -23,6 +23,12 @@
 [https://github.com/riku1227/RiClothesSetuper/wiki](https://github.com/riku1227/RiClothesSetuper/wiki)
 
 ## 更新履歴
+* 2.2.0 (2021/11/29)
+  * Expand Option
+    * version: 3
+    * ブレンドシェイプ (シェイプキー)の値をセットする機能を追加
+      * [CustomOperation](https://github.com/riku1227/RiClothesSetuper/wiki/CustomOperation)
+    * エラーなどが発生したときにコンソールにそのエラーを出すようになりました
 * 2.1.0 (2021/07/26)
   * Unity 2019をサポートしました
     * Missing Componentを削除する動作を改善

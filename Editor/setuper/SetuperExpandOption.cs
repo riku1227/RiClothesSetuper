@@ -151,8 +151,9 @@ namespace RiClothes {
                     }
                 break;
 
+                //RiClothes Setuper V2.0.0
                 case 2:
-                //RiClothes Setuper V 2.1.1
+                //RiClothes Setuper V2.2.0
                 case 3:
                     V2.ExpandOption v2ExpandOption = FileUtil.LoadJsonFile<V2.ExpandOption>(expandJsonPath);
                     if(v2ExpandOption != null) {

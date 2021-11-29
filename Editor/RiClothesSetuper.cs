@@ -4,7 +4,7 @@ using UnityEditor;
 
 namespace RiClothes {
     public class RiClothesSetuper: MonoBehaviour {
-        static string SETUPER_VERSION = "v2.1.0";
+        static string SETUPER_VERSION = "v2.2.0";
         [MenuItem("RiClothes/Setuper")]
         static void Setup() {
             EditorWindow.GetWindow<Setuper> (true, "RiClothes Setuper " + SETUPER_VERSION);
